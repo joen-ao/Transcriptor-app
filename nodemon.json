@@ -1,0 +1,8 @@
+{
+  "watch": ["src/main"],
+  "ext": "ts",
+  "exec": "tsc -p tsconfig.main.json && electron build/main/main.js",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

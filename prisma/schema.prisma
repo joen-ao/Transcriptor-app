@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../node_modules/.prisma/client"
+  binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./transcriptor.db"
+}
+
+model Transcription {
+  id              String   @id @default(cuid())
+  fileName        String
+  originalPath    String
+  status          TranscriptionStatus @default(PENDING)
+  progress        Float    @default(0.0)
+  language        String?
+  duration        Float?
+  text            String?
+  segments        Json?
+  wordCount       Int?
+  confidence      Float?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  completedAt     DateTime?
+  errorMessage    String?
+  
+  @@map("transcriptions")
+}
+
+enum TranscriptionStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
