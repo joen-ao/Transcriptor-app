@@ -5,22 +5,63 @@ import { DatabaseService } from '../../services/database-service';
 export class TranscriptionController {
   private transcriptionService: TranscriptionService;
   private databaseService: DatabaseService;
+  private isInitialized: boolean = false;
 
   constructor() {
     this.transcriptionService = new TranscriptionService();
     this.databaseService = new DatabaseService();
+    
+    // Initialize services asynchronously
+    this.initializeServices();
+  }
+
+  private async initializeServices(): Promise<void> {
+    try {
+      console.log('Initializing TranscriptionController services...');
+      await this.transcriptionService.initialize();
+      await this.databaseService.initialize();
+      this.isInitialized = true;
+      console.log('TranscriptionController services initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize TranscriptionController services:', error);
+      // Don't throw, allow fallback behavior
+      this.isInitialized = false;
+    }
+  }
+
+  private async ensureInitialized(): Promise<void> {
+    // Wait for initialization if it's still in progress
+    let attempts = 0;
+    const maxAttempts = 50; // 5 seconds max wait
+    
+    while (!this.isInitialized && attempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 100));
+      attempts++;
+    }
+    
+    if (!this.isInitialized) {
+      console.warn('Services not fully initialized, proceeding anyway');
+    }
   }
 
   async uploadAndTranscribe(req: Request, res: Response): Promise<void> {
     try {
+      // Ensure services are initialized
+      await this.ensureInitialized();
+      
       if (!req.file) {
         res.status(400).json({ error: 'No file uploaded' });
         return;
       }
 
+      // Get model from request body, default to 'small'
+      const selectedModel = req.body.model || 'small';
+      console.log('Selected Whisper model:', selectedModel);
+
       const transcriptionId = await this.transcriptionService.startTranscription(
         req.file.path,
-        req.file.originalname
+        req.file.originalname,
+        selectedModel
       );
 
       res.json({

@@ -21,6 +21,7 @@ model Transcription {
   originalPath    String
   status          TranscriptionStatus @default(PENDING)
   progress        Float    @default(0.0)
+  model           String?  // Whisper model used (base, small, medium, large)
   language        String?
   duration        Float?
   text            String?

@@ -21,12 +21,13 @@ export class DatabaseService {
     await this.prisma.$disconnect();
   }
 
-  async createTranscription(fileName: string, originalPath: string): Promise<string> {
+  async createTranscription(fileName: string, originalPath: string, model?: string): Promise<string> {
     const transcription = await this.prisma.transcription.create({
       data: {
         fileName,
         originalPath,
         status: TranscriptionStatus.PENDING,
+        model: model || null,
       },
     });
     return transcription.id;
@@ -69,20 +70,35 @@ export class DatabaseService {
     duration?: number,
     confidence?: number
   ): Promise<void> {
-    await this.prisma.transcription.update({
-      where: { id },
-      data: {
-        text,
-        segments,
-        language,
-        duration,
-        confidence,
-        wordCount: text.split(' ').length,
-        status: TranscriptionStatus.COMPLETED,
-        completedAt: new Date(),
-        progress: 100,
-      },
+    console.log(`Updating transcription result for ${id}:`, {
+      textLength: text.length,
+      segmentsCount: segments?.length || 0,
+      language,
+      duration,
+      confidence
     });
+    
+    try {
+      const result = await this.prisma.transcription.update({
+        where: { id },
+        data: {
+          text,
+          segments,
+          language,
+          duration,
+          confidence,
+          wordCount: text.split(' ').length,
+          status: TranscriptionStatus.COMPLETED,
+          completedAt: new Date(),
+          progress: 100,
+        },
+      });
+      
+      console.log(`Database update completed for ${id}. Final status: ${result.status}`);
+    } catch (error) {
+      console.error(`Error updating transcription result for ${id}:`, error);
+      throw error;
+    }
   }
 
   async getTranscriptionStatus(id: string) {
@@ -115,6 +131,7 @@ export class DatabaseService {
         fileName: true,
         status: true,
         progress: true,
+        model: true,
         createdAt: true,
         completedAt: true,
         wordCount: true,
