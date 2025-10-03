@@ -82,3 +82,6 @@ coverage/
 # Optional files
 .node_repl_history
 .yarn-integrity
+
+# Claude.ai configuration
+CLAUDE.md
