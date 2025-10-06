@@ -470,3 +470,67 @@
     min-width: auto;
   }
 }
+
+/* Uploader Page Styles */
+.uploader-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+}
+
+
+.uploader-main {
+  padding: 100px 20px 40px 20px; /* Adjusted for home header size */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: calc(100vh - 80px);
+}
+
+.uploader-container {
+  max-width: 900px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.uploader-title {
+  text-align: center;
+  color: #1d1d1f;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.02em;
+}
+
+.uploader-subtitle {
+  text-align: center;
+  color: #86868b;
+  font-size: 1.1rem;
+  margin: 0 0 40px 0;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .uploader-container {
+    padding: 24px;
+    margin: 20px;
+  }
+  
+  .uploader-title {
+    font-size: 2rem;
+  }
+  
+  .uploader-subtitle {
+    font-size: 1rem;
+  }
+  
+  .uploader-main {
+    padding: 20px 0;
+  }
+}

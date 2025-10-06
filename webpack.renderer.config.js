@@ -5,7 +5,7 @@ module.exports = {
   mode: process.env.NODE_ENV || 'development',
   entry: './src/renderer/index.tsx',
   target: 'electron-renderer',
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -33,19 +33,29 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'build/renderer'),
-    publicPath: '/',
+    publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+      inject: 'body',
+      scriptLoading: 'blocking',
     }),
   ],
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'build/renderer'),
-    },
     port: 3000,
     hot: true,
     historyApiFallback: true,
+    allowedHosts: 'all',
+    static: false,
+    devMiddleware: {
+      writeToDisk: false,
+    },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+    client: {
+      webSocketURL: 'auto://0.0.0.0:0/ws',
+    },
   },
 };

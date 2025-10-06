@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import '../styles/TranscriptionUploader.css';
 
 interface TranscriptionUploaderProps {
   onTranscriptionStart?: (id: string) => void;
