@@ -2,6 +2,24 @@
 
 A desktop application for local audio/video transcription using AI. Built with Electron, React, and Express.js, ensuring complete data privacy by running entirely offline.
 
+## Application Views
+
+### Home Page
+![Home Page](screenshots/home.jpg)
+The main landing page showcases the application features and provides easy navigation to transcription and history sections.
+
+### Transcription Upload
+![Transcription Upload](screenshots/transcribir.jpg)
+The upload interface allows you to drag and drop audio/video files, select Whisper models, and monitor transcription progress in real-time.
+
+### History & Management
+![History Page](screenshots/historial.png)
+View all your completed transcriptions with detailed metadata including file names, creation dates, models used, and processing status.
+
+### Transcription Details
+![Modal View](screenshots/modal-historial.png)
+View and copy the complete transcription text in a dedicated modal window with easy text selection and copying capabilities.
+
 ## Features
 
 - **Local Processing**: All transcription happens on your device - no data leaves your computer
@@ -87,24 +105,6 @@ npm run dist    # Build distributables for current platform
 ```bash
 npm start
 ```
-
-## Application Views
-
-### Home Page
-![Home Page](screenshots/home.jpg)
-The main landing page showcases the application features and provides easy navigation to transcription and history sections.
-
-### Transcription Upload
-![Transcription Upload](screenshots/transcribir.jpg)
-The upload interface allows you to drag and drop audio/video files, select Whisper models, and monitor transcription progress in real-time.
-
-### History & Management
-![History Page](screenshots/historial.png)
-View all your completed transcriptions with detailed metadata including file names, creation dates, models used, and processing status.
-
-### Transcription Details
-![Modal View](screenshots/modal-historial.png)
-View and copy the complete transcription text in a dedicated modal window with easy text selection and copying capabilities.
 
 ## Usage
 
