@@ -1,4 +1,4 @@
-import { ipcMain, dialog } from 'electron';
+import { ipcMain, dialog, BrowserWindow, nativeImage } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -72,4 +72,5 @@ export function setupIpcHandlers(): void {
       return { valid: false, error: error instanceof Error ? error.message : 'Unknown error' };
     }
   });
+
 }

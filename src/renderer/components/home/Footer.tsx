@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
           <a>Términos</a>
           <a id="contact">Contacto</a>
         </div>
-        <p>&copy; 2023 Transcriptor Pro. Solución on-premise para un mundo seguro.</p>
+        <p>&copy; 2025 Transcriptor Pro. Solución on-premise para un mundo seguro.</p>
       </div>
     </footer>
   );
